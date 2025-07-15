@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CxSE - Customer Experience Simulation Environment</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="app-container" id="app">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <!-- Logo (Top-left) -->
+            <div class="logo-container">
+                <h1 class="logo" onclick="goHome()">CxSE</h1>
+            </div>
+            
+            <!-- User Profile (Top-right) -->
+            <div class="user-profile">
+                <div class="profile-dropdown">
+                    <button class="profile-btn" onclick="toggleProfileDropdown()">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="current-user-name">John Doe</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="profile-dropdown">
+                        <div class="dropdown-section">
+                            <h4>Profile Settings</h4>
+                            <div class="form-group">
+                                <label for="user-name">Name:</label>
+                                <input type="text" id="user-name" value="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-role">Role:</label>
+                                <select id="user-role">
+                                    <option value="AE">Account Executive (AE)</option>
+                                    <option value="SDR">Sales Development Rep (SDR)</option>
+                                    <option value="BDR">Business Development Rep (BDR)</option>
+                                    <option value="CSM">Customer Success Manager (CSM)</option>
+                                    <option value="AM">Account Manager (AM)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="access-tier">Access Level:</label>
+                                <select id="access-tier">
+                                    <option value="User">User</option>
+                                    <option value="Owner">Owner</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="theme-toggle">
+                                    <span>Theme:</span>
+                                    <input type="checkbox" id="theme-toggle">
+                                    <span class="slider">
+                                        <span class="slider-text" data-on="Dark" data-off="Light"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <button class="save-profile-btn" onclick="saveProfile()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <nav class="module-nav">
+                <button class="module-btn" onclick="showModule('onboarding')" disabled>
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Onboarding</span>
+                </button>
+                <button class="module-btn active" onclick="showModule('training')">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Training</span>
+                </button>
+                <button class="module-btn" onclick="showModule('pipeline')" disabled>
+                    <i class="fas fa-chart-line"></i>
+                    <span>Pipeline</span>
+                </button>
+                <button class="module-btn" onclick="showModule('analytics')" disabled>
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Data & Analytics</span>
+                </button>
+                <button class="module-btn" onclick="showModule('other')" disabled>
+                    <i class="fas fa-ellipsis-h"></i>
+                    <span>Other</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Support Menu (Bottom-left) -->
+        <div class="support-menu">
+            <button class="support-btn" onclick="toggleSupportMenu()">
+                <i class="fas fa-question-circle"></i>
+                <span>Support & Settings</span>
+            </button>
+            <div class="support-dropdown" id="support-dropdown">
+                <a href="#" onclick="showSupport('about')">About CxSE</a>
+                <a href="#" onclick="showSupport('contact')">Contact Support</a>
+                <a href="#" onclick="showSupport('feedback')">Give Product Feedback</a>
+                <a href="#" onclick="showSupport('integrations')">Integrations</a>
+                <a href="#" onclick="showSupport('uploads')">Uploads</a>
+                <a href="#" onclick="showSupport('introduction')">Introduction</a>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Home Dashboard -->
+            <div id="home-content" class="content-section active">
+                <div class="welcome-section">
+                    <h2>Welcome to CxSE Training</h2>
+                    <p>Select a module from the sidebar to begin your customer experience simulation.</p>
+                </div>
+            </div>
+
+            <!-- Training Module -->
+            <div id="training-content" class="content-section">
+                <div class="training-header">
+                    <h2>Customer Experience Training</h2>
+                    <p>Practice your sales skills with AI-powered customer simulations</p>
+                </div>
+                
+                <div class="training-options">
+                    <div class="training-card" onclick="startTraining('message')">
+                        <div class="card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Message Training</h3>
+                        <p>Practice customer interactions through text-based conversations</p>
+                        <button class="start-btn">Start Messaging</button>
+                    </div>
+                    
+                    <div class="training-card" onclick="startTraining('call')">
+                        <div class="card-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Call Training</h3>
+                        <p>Practice customer interactions through voice conversations</p>
+                        <button class="start-btn">Start Calling</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Interface -->
+            <div id="training-interface" class="content-section">
+                <div class="training-session">
+                    <div class="session-header">
+                        <h3 id="session-title">Customer Simulation</h3>
+                        <div class="session-controls">
+                            <button class="control-btn" onclick="endSession()">
+                                <i class="fas fa-stop"></i> End Session
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Message Interface -->
+                    <div id="message-interface" class="interface-type">
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chat-messages">
+                                <!-- Messages will be dynamically added here -->
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="message-input" placeholder="Type your response..." 
+                                       onkeypress="handleKeyPress(event)">
+                                <button onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Call Interface -->
+                    <div id="call-interface" class="interface-type" style="display: none;">
+                        <div class="call-container">
+                            <div class="call-status">
+                                <div class="avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h4 id="customer-name">Customer</h4>
+                                <p id="call-timer">00:00</p>
+                            </div>
+                            <div class="call-controls">
+                                <button class="call-btn mute-btn" onclick="toggleMute()">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="call-btn end-call-btn" onclick="endCall()">
+                                    <i class="fas fa-phone-slash"></i>
+                                </button>
+                                <button class="call-btn speaker-btn" onclick="toggleSpeaker()">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Preparing your simulation...</p>
+            </div>
+        </div>
+
+        <!-- Feedback Modal -->
+        <div class="modal-overlay" id="feedback-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Session Feedback</h3>
+                    <button class="close-btn" onclick="closeFeedbackModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="feedback-section">
+                        <h4>How was your training session?</h4>
+                        <div class="rating">
+                            <span class="star" onclick="setRating(1)">★</span>
+                            <span class="star" onclick="setRating(2)">★</span>
+                            <span class="star" onclick="setRating(3)">★</span>
+                            <span class="star" onclick="setRating(4)">★</span>
+                            <span class="star" onclick="setRating(5)">★</span>
+                        </div>
+                        <textarea id="feedback-text" placeholder="Share your thoughts about this session..."></textarea>
+                        <button class="submit-feedback-btn" onclick="submitFeedback()">Submit Feedback</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/training.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
