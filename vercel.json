@@ -22,9 +22,11 @@
       ]
     }
   ],
-  "functions": 
-    "app/**": {
-      "runtime": "now-php@1.0.0"
+ {
+  "rewrites": [],
+  "redirects": [],
+  "headers": []
+}
     }
   },
   "env": {
