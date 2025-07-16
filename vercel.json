@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
@@ -22,10 +21,6 @@
       ]
     }
   ],
-  "rewrites": [],
-  "redirects": [],
-  "headers": []
-  ,
   "env": {
     "NODE_VERSION": "18"
   },
