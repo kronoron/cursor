@@ -1,26 +1,34 @@
 import { useState } from 'react'
 import './App.css'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import SupportMenu from './components/SupportMenu'
+import TrainingModule from './components/TrainingModule'
+import { UserProvider } from './context/UserContext'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentModule, setCurrentModule] = useState('training')
+  const [darkMode, setDarkMode] = useState(true)
 
   return (
-    <>
-      <div>
-        <h1>Cursor Vite App</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test HMR
-          </p>
+    <UserProvider>
+      <div className={`app ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+        <div className="app-layout">
+          <Sidebar currentModule={currentModule} setCurrentModule={setCurrentModule} />
+          <main className="main-content">
+            {currentModule === 'training' && <TrainingModule />}
+            {currentModule !== 'training' && (
+              <div className="coming-soon">
+                <h2>Coming Soon</h2>
+                <p>This module is not yet available in the MVP.</p>
+              </div>
+            )}
+          </main>
+          <SupportMenu />
         </div>
-        <p className="read-the-docs">
-          Click on the Vite logo to learn more
-        </p>
       </div>
-    </>
+    </UserProvider>
   )
 }
 
